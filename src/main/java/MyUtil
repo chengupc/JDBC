@@ -1,0 +1,40 @@
+import	java.sql.Statement;
+import	java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import	java.sql.ResultSet;
+public class MyUtil {
+
+
+        public static Connection getConnection(){
+            Connection conn = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://192.168.119.132:3306/test1","root", "199214");
+                System.out.println("get sucess");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("failed");
+            }
+            return conn;
+        }
+        public static ResultSet getStatement(Connection conn, Statement stmt, String sql){
+            ResultSet rs = null;
+            try {
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery(sql);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return rs;
+
+        }
+        public static void getCloss(Connection conn, ResultSet rs) throws SQLException {
+            conn.close();
+            rs.close();
+        }
+    }
+
